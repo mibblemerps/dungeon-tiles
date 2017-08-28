@@ -6,13 +6,17 @@ using DungeonTiles.Turns;
 using DungeonTiles.Util;
 using UnityEngine;
 
-namespace DungeonTiles.Ui.States
+namespace DungeonTiles.Ui.Player.States
 {
-    public class PlayerMovement : UiState
+    public class PlayerMovement : PlayerState
     {
+        public int MaxMoves = 8;
+
+        protected int SquaresMoved = 0;
+
         protected SmoothMovement GridMovement;
 
-        public PlayerMovement(Game game, PlayerBehaviour player) : base(game, player)
+        public PlayerMovement(PlayerStateController stateController) : base(stateController)
         {
         }
 
@@ -23,9 +27,6 @@ namespace DungeonTiles.Ui.States
 
         public override void Update()
         {
-            // Max moves
-            //if (SquaresMoved > 10) return;
-
             // Work out movement vector
             // First we calculate the angle the camera is at, so we can apply it to the movement vector so we move in the direction the player
             // would expect based on their camera angle.
@@ -47,7 +48,14 @@ namespace DungeonTiles.Ui.States
                 if (Game.GridController.CanMoveTo(new Vector2(targetPos.x, targetPos.z), Player.gameObject))
                 {
                     GridMovement.TargetPosition = targetPos;
+                    SquaresMoved++;
                 }
+            }
+
+            // Max moves
+            if (SquaresMoved >= MaxMoves)
+            {
+                SetState(new PickAction(StateController));
             }
         }
     }

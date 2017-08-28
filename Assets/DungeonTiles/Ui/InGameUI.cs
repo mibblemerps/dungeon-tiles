@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using DungeonTiles.Turns;
-using DungeonTiles.Ui.States;
+using DungeonTiles.Ui.Player.States;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -13,13 +13,11 @@ namespace DungeonTiles.Ui
     {
         public GameObject PlayerObject;
         protected PlayerBehaviour Player;
-
         protected Game Game;
 
         #region UiStates
 
         protected InGameHud InGameHud;
-        protected PlayerMovement PlayerMovement;
 
         #endregion
 
@@ -29,18 +27,14 @@ namespace DungeonTiles.Ui
             Player = PlayerObject.GetComponent<PlayerBehaviour>();
 
             InGameHud = new InGameHud(Game, Player);
-            PlayerMovement = new PlayerMovement(Game, Player);
 
             InGameHud.Start();
-            PlayerMovement.Start();
 
         }
 
         public void Update()
         {
             InGameHud.Update();
-            PlayerMovement.Update();
-
         }
     }
 }

@@ -6,25 +6,31 @@ using DungeonTiles.Turns;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace DungeonTiles.Ui.States
+namespace DungeonTiles.Ui
 {
-    public class InGameHud : UiState
+    public class InGameHud
     {
+        protected Game Game;
+        protected PlayerBehaviour Player;
+
         protected Text TurnStatusText;
 
         private Turn _turn;
 
-        public InGameHud(Game game, PlayerBehaviour player) : base(game, player)
+        public InGameHud(Game game, PlayerBehaviour player)
         {
+            Game = game;
+            Player = player;
+
             TurnStatusText = GameObject.Find("Text_TurnStatus").GetComponent<Text>();
         }
 
-        public override void Start()
+        public void Start()
         {
             //
         }
 
-        public override void Update()
+        public void Update()
         {
             _turn = Game.TurnController.Turn;
 
