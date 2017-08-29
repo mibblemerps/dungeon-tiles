@@ -15,7 +15,7 @@ namespace DungeonTiles.Ui.Player.States
         protected Button AttackButton;
         protected Button UseItemButton;
 
-        public PickAction(PlayerStateController stateController) : base(stateController)
+        public PickAction(PlayerFsm fsm) : base(fsm)
         {
         }
 
@@ -35,11 +35,6 @@ namespace DungeonTiles.Ui.Player.States
             ActionsCanvas.enabled = true;
         }
 
-        public override void Update()
-        {
-            //
-        }
-
         public override void End()
         {
             base.End();
@@ -49,8 +44,7 @@ namespace DungeonTiles.Ui.Player.States
 
         protected void OnClickMove()
         {
-            Debug.Log("test");
-            SetState(new PlayerMovement(StateController));
+            Fsm.SetState(new PlayerMovement((PlayerFsm) Fsm));
         }
     }
 }

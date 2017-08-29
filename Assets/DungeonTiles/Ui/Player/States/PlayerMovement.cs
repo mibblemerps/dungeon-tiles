@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using DungeonTiles.Turns;
 using DungeonTiles.Util;
+using DungeonTiles.Util.Fsm;
 using UnityEngine;
 
 namespace DungeonTiles.Ui.Player.States
@@ -12,11 +13,11 @@ namespace DungeonTiles.Ui.Player.States
     {
         public int MaxMoves = 8;
 
-        protected int SquaresMoved = 0;
+        protected int SquaresMoved;
 
         protected SmoothMovement GridMovement;
 
-        public PlayerMovement(PlayerStateController stateController) : base(stateController)
+        public PlayerMovement(PlayerFsm fsm) : base(fsm)
         {
         }
 
@@ -55,7 +56,7 @@ namespace DungeonTiles.Ui.Player.States
             // Max moves
             if (SquaresMoved >= MaxMoves)
             {
-                SetState(new PickAction(StateController));
+                Fsm.SetState(new PickAction((PlayerFsm) Fsm));
             }
         }
     }

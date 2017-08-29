@@ -1,39 +1,20 @@
 ﻿using System;
 using System.Collections.Generic;
-using DungeonTiles.Turns;
+using System.Linq;
+using System.Text;
+using DungeonTiles.Util.Fsm;
 
 namespace DungeonTiles.Ui.Player.States
 {
-    public abstract class PlayerState
+    public class PlayerState : State
     {
-        protected PlayerStateController StateController;
         protected Game Game;
         protected PlayerBehaviour Player;
-        
-        public PlayerState PreviousState;
 
-        protected PlayerState(PlayerStateController stateController)
+        public PlayerState(PlayerFsm fsm) : base(fsm)
         {
-            StateController = stateController;
-
-            Game = StateController.Game;
-            Player = StateController.Player;
-        }
-
-        public abstract void Start();
-
-        public abstract void Update();
-
-        public virtual void End() { }
-
-        protected void SetState(PlayerState newState)
-        {
-            StateController.PlayerState = newState;
-        }
-
-        public void Exit()
-        {
-            StateController.PlayerState = PreviousState;
+            Game = fsm.Game;
+            Player = fsm.Player;
         }
     }
 }
