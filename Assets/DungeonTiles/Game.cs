@@ -16,9 +16,12 @@ namespace DungeonTiles
         public static Game Instance;
 
         #region GameSystems
-        public EventSystem EventSystem;
+        
+        [HideInInspector]
         public GridController GridController;
+        [HideInInspector]
         public TurnController TurnController;
+
         #endregion
 
         public List<PlayerBehaviour> Players = new List<PlayerBehaviour>();
@@ -28,7 +31,6 @@ namespace DungeonTiles
             Instance = this;
 
             #region GameSystemInitialisers
-            EventSystem = GetComponent<EventSystem>();
             GridController = GetComponent<GridController>();
             TurnController = new TurnController();
             #endregion

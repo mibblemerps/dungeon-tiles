@@ -13,6 +13,11 @@ namespace DungeonTiles.Util.Fsm
         /// </summary>
         public static State IdleState;
 
+        /// <summary>
+        /// Should the FSM write state changes to the Debug log?
+        /// </summary>
+        public bool ShouldLog = false;
+
         public StateChangeEvent OnNewState = new StateChangeEvent();
 
         private State _state = IdleState;
@@ -37,11 +42,11 @@ namespace DungeonTiles.Util.Fsm
             if (_state != null)
             {
                 _state.End();
-                Debug.Log("[Fsm] State change: " + _state.ToString() + " -> " + state.ToString());
+                if (ShouldLog) Debug.Log("[Fsm] State change: " + _state.ToString() + " -> " + state.ToString());
             }
             else
             {
-                Debug.Log("[Fsm] State change: None -> " + state.ToString());
+                if (ShouldLog) Debug.Log("[Fsm] State change: None -> " + state.ToString());
             }
 
             // Set new state
