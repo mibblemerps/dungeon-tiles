@@ -13,10 +13,24 @@ namespace DungeonTiles.Events
         /// Called when a player's state changes.
         /// </summary>
         public static PlayerStateChangeEvent OnPlayerStateChange = new PlayerStateChangeEvent();
+        
+        /// <summary>
+        /// Called when an entity spawns.
+        /// </summary>
+        public static EntitySpawnedEvent OnEntitySpawned = new EntitySpawnedEvent();
+
+        /// <summary>
+        /// Called when an entity dies.
+        /// </summary>
+        public static EntityDiedEvent OnEntityDied = new EntityDiedEvent();
 
         #region EventClasses
 
         public class PlayerStateChangeEvent : UnityEvent<Player, PlayerState> { }
+
+        public class EntitySpawnedEvent : UnityEvent<Entity> { }
+
+        public class EntityDiedEvent : UnityEvent<Entity> { }
 
         #endregion
     }

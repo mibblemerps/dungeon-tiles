@@ -10,6 +10,11 @@ namespace DungeonTiles.Events
             {
                 Log("OnPlayerStateChange: " + playerBehaviour.gameObject.name + ", " + playerState.ToString());
             });
+
+            GameEvents.OnEntityDied.AddListener((entity) =>
+            {
+                Log("OnEntityDied: " + entity.name);
+            });
         }
 
         protected void Log(string msg, int level = 1)
