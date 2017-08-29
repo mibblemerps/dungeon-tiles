@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace DungeonTiles
 {
-    public class PlayerBehaviour : MonoBehaviour
+    public class Player : MonoBehaviour
     {
         protected Game Game;
         protected SmoothMovement GridMovement;

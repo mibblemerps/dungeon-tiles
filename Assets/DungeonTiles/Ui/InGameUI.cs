@@ -12,7 +12,7 @@ namespace DungeonTiles.Ui
     public class InGameUI : MonoBehaviour
     {
         public GameObject PlayerObject;
-        protected PlayerBehaviour Player;
+        protected DungeonTiles.Player Player;
         protected Game Game;
 
         #region UiStates
@@ -24,7 +24,7 @@ namespace DungeonTiles.Ui
         public void Start()
         {
             Game = Game.Instance;
-            Player = PlayerObject.GetComponent<PlayerBehaviour>();
+            Player = PlayerObject.GetComponent<DungeonTiles.Player>();
 
             InGameHud = new InGameHud(Game, Player);
 

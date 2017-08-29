@@ -12,9 +12,9 @@ namespace DungeonTiles.Ui.Player
     public class PlayerFsm : FiniteStateMachine
     {
         public Game Game;
-        public PlayerBehaviour Player;
+        public DungeonTiles.Player Player;
 
-        public PlayerFsm(Game game, PlayerBehaviour player)
+        public PlayerFsm(Game game, DungeonTiles.Player player)
         {
             Game = game;
             Player = player;

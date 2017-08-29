@@ -11,13 +11,13 @@ namespace DungeonTiles.Ui
     public class InGameHud
     {
         protected Game Game;
-        protected PlayerBehaviour Player;
+        protected DungeonTiles.Player Player;
 
         protected Text TurnStatusText;
 
         private Turn _turn;
 
-        public InGameHud(Game game, PlayerBehaviour player)
+        public InGameHud(Game game, DungeonTiles.Player player)
         {
             Game = game;
             Player = player;

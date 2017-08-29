@@ -13,7 +13,7 @@ namespace DungeonTiles.Ui.Player
 
         public void Start()
         {
-            PlayerBehaviour player = GetComponent<PlayerBehaviour>();
+            DungeonTiles.Player player = GetComponent<DungeonTiles.Player>();
             Game game = Game.Instance;
 
             PlayerFsm = new PlayerFsm(game, player);

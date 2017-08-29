@@ -16,7 +16,7 @@ namespace DungeonTiles.Events
 
         #region EventClasses
 
-        public class PlayerStateChangeEvent : UnityEvent<PlayerBehaviour, PlayerState> { }
+        public class PlayerStateChangeEvent : UnityEvent<Player, PlayerState> { }
 
         #endregion
     }

@@ -24,7 +24,7 @@ namespace DungeonTiles
 
         #endregion
 
-        public List<PlayerBehaviour> Players = new List<PlayerBehaviour>();
+        public List<Player> Players = new List<Player>();
 
         void OnEnable()
         {
@@ -50,8 +50,8 @@ namespace DungeonTiles
         {
             Players.Clear();
 
-            PlayerBehaviour[] players = FindObjectsOfType<PlayerBehaviour>();
-            foreach (PlayerBehaviour player in players)
+            Player[] players = FindObjectsOfType<Player>();
+            foreach (Player player in players)
                 Players.Add(player);
         }
     }

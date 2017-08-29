@@ -9,7 +9,7 @@ namespace DungeonTiles.Ui.Player.States
     public class PlayerState : State
     {
         protected Game Game;
-        protected PlayerBehaviour Player;
+        protected DungeonTiles.Player Player;
 
         public PlayerState(PlayerFsm fsm) : base(fsm)
         {

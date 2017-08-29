@@ -14,7 +14,7 @@ namespace DungeonTiles.Turns
         /// Get/set the whose turn it currently is.
         /// This player must exist in the game player list, otherwise bad things will happen.
         /// </summary>
-        public PlayerBehaviour CurrentPlayersTurn
+        public Player CurrentPlayersTurn
         {
             get { return Game.Instance.Players[_currentPlayersTurnIndex]; }
             protected set
@@ -37,7 +37,7 @@ namespace DungeonTiles.Turns
         /// <summary>Attacks performed. Under normal rules this can never be more than 1.</summary>
         public int Attacks = 0;
 
-        public Turn(PlayerBehaviour player)
+        public Turn(Player player)
         {
             CurrentPlayersTurn = player;
         }
