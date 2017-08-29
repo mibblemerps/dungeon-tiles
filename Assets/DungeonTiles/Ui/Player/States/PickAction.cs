@@ -32,6 +32,12 @@ namespace DungeonTiles.Ui.Player.States
             MoveButton.onClick.RemoveAllListeners();
             MoveButton.onClick.AddListener(OnClickMove);
 
+            AttackButton.onClick.RemoveAllListeners();
+            AttackButton.onClick.AddListener(() =>
+            {
+                Fsm.SetState(new PlayerAttack((PlayerFsm) Fsm));
+            });
+
             ActionsCanvas.enabled = true;
         }
 
