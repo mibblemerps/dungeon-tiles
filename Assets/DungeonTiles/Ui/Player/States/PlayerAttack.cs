@@ -6,8 +6,12 @@ namespace DungeonTiles.Ui.Player.States
 {
     public class PlayerAttack : PlayerState
     {
+        /// <summary>
+        /// The attack being used
+        /// </summary>
+        public Attack Attack { get; protected set; }
+
         protected Entity Entity;
-        protected Attack Attack;
 
         public PlayerAttack(PlayerFsm fsm, Attack attack) : base(fsm)
         {

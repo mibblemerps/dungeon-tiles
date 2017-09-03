@@ -27,21 +27,26 @@ namespace DungeonTiles
 
         public List<Player> Players = new List<Player>();
 
-        void OnEnable()
+        public Game()
         {
             Instance = this;
+        }
 
+        void OnEnable()
+        {
             #region GameSystemInitialisers
             GridController = GetComponent<GridController>();
             TurnController = new TurnController();
             #endregion
 
             Attack.RegisterAttacks();
+
+            LoadPlayers();
         }
 
         void Start()
         {
-            LoadPlayers();
+            
         }
         
         /* --- */

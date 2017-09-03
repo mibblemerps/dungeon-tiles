@@ -13,7 +13,7 @@ namespace DungeonTiles.Ui.Player.States
     {
         public int MaxMoves = 8;
 
-        protected int SquaresMoved;
+        public int SquaresMoved;
 
         protected SmoothMovement GridMovement;
 

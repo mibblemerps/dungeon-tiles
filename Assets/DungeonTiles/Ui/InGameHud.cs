@@ -3,36 +3,36 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using DungeonTiles.Turns;
+using DungeonTiles.Ui.Player;
+using DungeonTiles.Ui.Player.States;
 using UnityEngine;
 using UnityEngine.UI;
 
 namespace DungeonTiles.Ui
 {
-    public class InGameHud
+    public class InGameHud : MonoBehaviour
     {
         protected Game Game;
         protected DungeonTiles.Player Player;
+        protected PlayerFsm PlayerFsm;
 
         protected Text TurnStatusText;
 
-        private Turn _turn;
-
-        public InGameHud(Game game, DungeonTiles.Player player)
-        {
-            Game = game;
-            Player = player;
-
-            TurnStatusText = GameObject.Find("Text_TurnStatus").GetComponent<Text>();
-        }
+        protected Turn Turn;
 
         public void Start()
         {
-            //
+            Game = Game.Instance;
+            Player = Game.Players.First(); // todo: get player properly
+            PlayerFsm = Player.GetComponent<PlayerFsmBehaviour>().PlayerFsm;
+
+            var a = GameObject.Find("Text_TurnStatus");
+            TurnStatusText = a.GetComponent<Text>();
         }
 
         public void Update()
         {
-            _turn = Game.TurnController.Turn;
+            Turn = Game.TurnController.Turn;
 
             UpdateTopLeftPanel();
         }
@@ -40,25 +40,42 @@ namespace DungeonTiles.Ui
         protected void UpdateTopLeftPanel()
         {
             // Set current turn status text. (Text_TurnStatus)
-            if (_turn.CurrentPlayersTurn == Player)
+            if (Turn.CurrentPlayersTurn == Player)
             {
-                switch (_turn.TurnPhase)
+                switch (Turn.TurnPhase)
                 {
                     case TurnPhase.Hero:
-                        TurnStatusText.text = "Your Turn: Hero Phase";
+                        if (PlayerFsm.State is PlayerMovement)
+                        {
+                            PlayerMovement movementState = (PlayerMovement) PlayerFsm.State;
+                            SetStatus("Moving: " + movementState.SquaresMoved + "/" + movementState.MaxMoves);
+                        } else if (PlayerFsm.State is PlayerAttack)
+                        {
+                            PlayerAttack attackState = (PlayerAttack) PlayerFsm.State;
+                            SetStatus("Attacking With " + attackState.Attack.Name);
+                        }
+                        else
+                        {
+                            SetStatus("Your Turn");
+                        }
                         break;
                     case TurnPhase.Exploration:
-                        TurnStatusText.text = "Your Turn: Exploration Phase";
+                        SetStatus("Your Exploration Phase");
                         break;
                     case TurnPhase.Monster:
-                        TurnStatusText.text = "Your Turn: Monster Phase";
+                        SetStatus("Your Monster Phase");
                         break;
                 }
             }
             else
             {
-                TurnStatusText.text = _turn.CurrentPlayersTurn.name + "'s Turn";
+                TurnStatusText.text = Turn.CurrentPlayersTurn.name + "'s Turn";
             }
+        }
+
+        protected void SetStatus(string status)
+        {
+            TurnStatusText.text = status;
         }
     }
 }

@@ -11,13 +11,16 @@ namespace DungeonTiles.Ui.Player
     {
         public PlayerFsm PlayerFsm;
 
-        public void Start()
+        public void OnEnable()
         {
             DungeonTiles.Player player = GetComponent<DungeonTiles.Player>();
             Game game = Game.Instance;
 
             PlayerFsm = new PlayerFsm(game, player);
+        }
 
+        public void Start()
+        {
             PlayerFsm.SetState(new PickAction(PlayerFsm));
         }
 
