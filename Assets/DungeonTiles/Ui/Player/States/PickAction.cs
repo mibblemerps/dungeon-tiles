@@ -14,18 +14,21 @@ namespace DungeonTiles.Ui.Player.States
         protected GameObject MoveCard;
         protected Button MoveCardBtn;
 
+        protected Dictionary<AttackCardBehaviour, Button> AttackButtons = new Dictionary<AttackCardBehaviour, Button>();
+
         public PickAction(PlayerFsm fsm) : base(fsm)
         {
         }
 
         public override void Start()
         {
+            // Get bottom canvas
             BottomCanvas = GameObject.Find("Bottom Canvas").GetComponent<Canvas>();
+            BottomCanvas.enabled = true; // show canvas
 
+            // Get movement card
             MoveCard = GameObject.Find("Move Card");
             MoveCardBtn = MoveCard.GetComponent<Button>();
-
-            BottomCanvas.enabled = true;
 
             // Bind click handler for move card
             MoveCardBtn.onClick.RemoveAllListeners();
@@ -33,6 +36,8 @@ namespace DungeonTiles.Ui.Player.States
             {
                 Fsm.SetState(new PlayerMovement((PlayerFsm) Fsm));
             });
+
+            UpdateAttackCards();
         }
 
         public override void End()
@@ -40,6 +45,35 @@ namespace DungeonTiles.Ui.Player.States
             base.End();
 
             BottomCanvas.enabled = false;
+        }
+
+        public void UpdateAttackCards()
+        {
+            AttackButtons.Clear();
+
+            // Get attack cards
+            foreach (AttackCardBehaviour attackCardBehaviour in GameObject.FindObjectsOfType<AttackCardBehaviour>())
+            {
+                Debug.Log("Found attack card: " + attackCardBehaviour.AttackName);
+
+                Button btn = attackCardBehaviour.gameObject.GetComponent<Button>();
+
+                if (btn != null)
+                {
+                    AttackButtons.Add(attackCardBehaviour, btn);
+                }
+            }
+
+            // Add click handlers
+            foreach (KeyValuePair<AttackCardBehaviour, Button> attackCard in AttackButtons)
+            {
+                attackCard.Value.onClick.RemoveAllListeners();
+                var card = attackCard; // To fix inconsistent behaviour when accessing 'attackCard' inside a closure
+                attackCard.Value.onClick.AddListener(() =>
+                {
+                    Fsm.SetState(new PlayerAttack((PlayerFsm) Fsm, card.Key.GetAttack()));
+                });
+            }
         }
     }
 }

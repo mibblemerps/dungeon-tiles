@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using DungeonTiles.Content.Attacks;
 using DungeonTiles.Events;
 using DungeonTiles.Grid;
 using DungeonTiles.Turns;
@@ -34,6 +35,8 @@ namespace DungeonTiles
             GridController = GetComponent<GridController>();
             TurnController = new TurnController();
             #endregion
+
+            Attack.RegisterAttacks();
         }
 
         void Start()

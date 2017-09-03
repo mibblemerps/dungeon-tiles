@@ -1,9 +1,13 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
 
 namespace DungeonTiles.Content.Attacks
 {
     public abstract class Attack
     {
+        public static Dictionary<string, Attack> Attacks = new Dictionary<string, Attack>();
+
         /// <summary>
         /// Unique ID for this attack.
         /// </summary>
@@ -39,8 +43,17 @@ namespace DungeonTiles.Content.Attacks
 
         #region Attacks
 
-        public static SimpleAttack TestAttack = new SimpleAttack("test_attack", "Test Attack", 5, 1);
+        public static void RegisterAttacks()
+        {
+            RegisterAttack(new SimpleAttack("test_attack", "Test Attack", 5, 1));
+            RegisterAttack(new SimpleAttack("super_test_attack", "Super Test Attack", 99, 99));
+        }
 
         #endregion
+
+        public static void RegisterAttack(Attack attack)
+        {
+            Attacks.Add(attack.Id, attack);
+        }
     }
 }

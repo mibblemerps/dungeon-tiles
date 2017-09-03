@@ -7,10 +7,12 @@ namespace DungeonTiles.Ui.Player.States
     public class PlayerAttack : PlayerState
     {
         protected Entity Entity;
+        protected Attack Attack;
 
-        public PlayerAttack(PlayerFsm fsm) : base(fsm)
+        public PlayerAttack(PlayerFsm fsm, Attack attack) : base(fsm)
         {
             Entity = fsm.Player.GetComponent<Entity>();
+            Attack = attack;
         }
 
         public override void Update()
@@ -29,7 +31,7 @@ namespace DungeonTiles.Ui.Player.States
                     {
                         // An entity was clicked! Attack it.
                         Debug.Log("Attack: " + clickedObj.name);
-                        Attack.TestAttack.DoAttack(target, Entity);
+                        Attack.DoAttack(target, Entity);
                     }
                 }
             }
