@@ -54,8 +54,6 @@ namespace DungeonTiles.Ui.Player.States
             // Get attack cards
             foreach (AttackCardBehaviour attackCardBehaviour in GameObject.FindObjectsOfType<AttackCardBehaviour>())
             {
-                Debug.Log("Found attack card: " + attackCardBehaviour.AttackName);
-
                 Button btn = attackCardBehaviour.gameObject.GetComponent<Button>();
 
                 if (btn != null)
