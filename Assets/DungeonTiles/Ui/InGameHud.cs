@@ -17,6 +17,7 @@ namespace DungeonTiles.Ui
         protected PlayerFsm PlayerFsm;
 
         protected Text TurnStatusText;
+        protected Text CharacterNameText;
 
         protected Turn Turn;
 
@@ -25,9 +26,9 @@ namespace DungeonTiles.Ui
             Game = Game.Instance;
             Player = Game.Players.First(); // todo: get player properly
             PlayerFsm = Player.GetComponent<PlayerFsmBehaviour>().PlayerFsm;
-
-            var a = GameObject.Find("Text_TurnStatus");
-            TurnStatusText = a.GetComponent<Text>();
+            
+            TurnStatusText = GameObject.Find("Text_TurnStatus").GetComponent<Text>();
+            CharacterNameText = GameObject.Find("Text_CharacterName").GetComponent<Text>();
         }
 
         public void Update()
@@ -39,6 +40,9 @@ namespace DungeonTiles.Ui
 
         protected void UpdateTopLeftPanel()
         {
+            // Set character name
+            CharacterNameText.text = Player.name;
+
             // Set current turn status text. (Text_TurnStatus)
             if (Turn.CurrentPlayersTurn == Player)
             {
