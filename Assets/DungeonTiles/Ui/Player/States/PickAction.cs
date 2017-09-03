@@ -9,11 +9,10 @@ namespace DungeonTiles.Ui.Player.States
 {
     public class PickAction : PlayerState
     {
-        protected Canvas ActionsCanvas;
+        protected Canvas BottomCanvas;
 
-        protected Button MoveButton;
-        protected Button AttackButton;
-        protected Button UseItemButton;
+        protected GameObject MoveCard;
+        protected Button MoveCardBtn;
 
         public PickAction(PlayerFsm fsm) : base(fsm)
         {
@@ -21,36 +20,26 @@ namespace DungeonTiles.Ui.Player.States
 
         public override void Start()
         {
-            ActionsCanvas = GameObject.Find("Actions Canvas").GetComponent<Canvas>();
+            BottomCanvas = GameObject.Find("Bottom Canvas").GetComponent<Canvas>();
 
-            // Find buttons
-            MoveButton = GameObject.Find("Action_Move").GetComponent<Button>();
-            AttackButton = GameObject.Find("Action_Attack").GetComponent<Button>();
-            UseItemButton = GameObject.Find("Action_UseItem").GetComponent<Button>();
+            MoveCard = GameObject.Find("Move Card");
+            MoveCardBtn = MoveCard.GetComponent<Button>();
 
-            // Add click listeners
-            MoveButton.onClick.RemoveAllListeners();
-            MoveButton.onClick.AddListener(OnClickMove);
+            BottomCanvas.enabled = true;
 
-            AttackButton.onClick.RemoveAllListeners();
-            AttackButton.onClick.AddListener(() =>
+            // Bind click handler for move card
+            MoveCardBtn.onClick.RemoveAllListeners();
+            MoveCardBtn.onClick.AddListener(() =>
             {
-                Fsm.SetState(new PlayerAttack((PlayerFsm) Fsm));
+                Fsm.SetState(new PlayerMovement((PlayerFsm) Fsm));
             });
-
-            ActionsCanvas.enabled = true;
         }
 
         public override void End()
         {
             base.End();
 
-            ActionsCanvas.enabled = false;
-        }
-
-        protected void OnClickMove()
-        {
-            Fsm.SetState(new PlayerMovement((PlayerFsm) Fsm));
+            BottomCanvas.enabled = false;
         }
     }
 }
