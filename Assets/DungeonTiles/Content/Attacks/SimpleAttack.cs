@@ -20,6 +20,8 @@ namespace DungeonTiles.Content.Attacks
         /// <param name="damage">Damage inflicted if successful</param>
         public SimpleAttack(string id, string name, int attack, int damage) : base(id, name)
         {
+            Attack = attack;
+            Damage = damage;
         }
 
         public override void DoAttack(Entity target, Entity attacker)
