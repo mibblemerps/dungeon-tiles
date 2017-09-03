@@ -32,6 +32,9 @@ namespace DungeonTiles.Ui.Player.States
                         // An entity was clicked! Attack it.
                         Debug.Log("Attack: " + clickedObj.name);
                         Attack.DoAttack(target, Entity);
+
+                        // Done attacking
+                        Fsm.SetState(new PickAction((PlayerFsm) Fsm));
                     }
                 }
             }
