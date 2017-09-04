@@ -53,7 +53,8 @@ namespace DungeonTiles.Ui
                         {
                             PlayerMovement movementState = (PlayerMovement) PlayerFsm.State;
                             SetStatus("Moving: " + movementState.SquaresMoved + "/" + movementState.MaxMoves);
-                        } else if (PlayerFsm.State is PlayerAttack)
+                        }
+                        else if (PlayerFsm.State is PlayerAttack)
                         {
                             PlayerAttack attackState = (PlayerAttack) PlayerFsm.State;
                             SetStatus("Attacking With " + attackState.Attack.Name);
@@ -63,9 +64,11 @@ namespace DungeonTiles.Ui
                             SetStatus("Your Turn");
                         }
                         break;
+
                     case TurnPhase.Exploration:
                         SetStatus("Your Exploration Phase");
                         break;
+
                     case TurnPhase.Monster:
                         SetStatus("Your Monster Phase");
                         break;
