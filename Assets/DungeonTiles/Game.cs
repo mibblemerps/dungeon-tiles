@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using DungeonTiles.Content.Attacks;
 using DungeonTiles.Events;
+using DungeonTiles.Exploration;
 using DungeonTiles.Grid;
 using DungeonTiles.Turns;
 using UnityEngine;

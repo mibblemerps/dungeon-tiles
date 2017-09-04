@@ -70,9 +70,14 @@ namespace DungeonTiles.Grid
         /// <returns>Can move?</returns>
         public bool CanMoveTo(Vector2 position, GameObject obj)
         {
-            // Loop through all objects at this position and check if we can collide with it.
-            // If no objects are here, then the for loop will never even run and we'll just return true.
+            // Get objects at the target pos
             List<GameObject> existingObjects = GetObjectsAt(position);
+
+            // There is nothing here (not even a floor). You cannot move here.
+            if (existingObjects.Count == 0)
+                return false;
+
+            // Loop through all objects at this position and check if we can collide with it
             foreach (GameObject existingObject in existingObjects)
             {
                 GridAware gridAware = existingObject.GetComponent<GridAware>();
