@@ -36,14 +36,13 @@ namespace DungeonTiles
 
         void OnEnable()
         {
-            #region GameSystemInitialisers
             GridController = GetComponent<GridController>();
-            TurnController = new TurnController();
-            #endregion
 
             Attack.RegisterAttacks();
 
             LoadPlayers();
+
+            TurnController = new TurnController(Players);
         }
 
         void Start()

@@ -6,6 +6,8 @@ namespace DungeonTiles.Ui.Player.States
 {
     public class PlayerAttack : PlayerState
     {
+        protected HeroPhaseState HeroPhaseState;
+
         /// <summary>
         /// The attack being used
         /// </summary>
@@ -13,8 +15,9 @@ namespace DungeonTiles.Ui.Player.States
 
         protected Entity Entity;
 
-        public PlayerAttack(PlayerFsm fsm, Attack attack) : base(fsm)
+        public PlayerAttack(PlayerFsm fsm, HeroPhaseState heroPhaseState, Attack attack) : base(fsm)
         {
+            HeroPhaseState = heroPhaseState;
             Entity = fsm.Player.GetComponent<Entity>();
             Attack = attack;
         }
@@ -38,7 +41,7 @@ namespace DungeonTiles.Ui.Player.States
                         Attack.DoAttack(target, Entity);
 
                         // Done attacking
-                        Fsm.SetState(new PickAction((PlayerFsm) Fsm));
+                        Fsm.SetState(HeroPhaseState); // Return to pick action state
                     }
                 }
             }

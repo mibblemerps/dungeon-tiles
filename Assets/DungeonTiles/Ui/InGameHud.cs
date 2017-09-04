@@ -19,7 +19,7 @@ namespace DungeonTiles.Ui
         protected Text TurnStatusText;
         protected Text CharacterNameText;
 
-        protected Turn Turn;
+        protected TurnController TurnController;
 
         public void Start()
         {
@@ -33,7 +33,7 @@ namespace DungeonTiles.Ui
 
         public void Update()
         {
-            Turn = Game.TurnController.Turn;
+            TurnController = Game.TurnController;
 
             // todo: Make this update only on an as-needed basis.
             // Only update top left panel once every 15 frames
@@ -47,9 +47,9 @@ namespace DungeonTiles.Ui
             CharacterNameText.text = Player.name;
 
             // Set current turn status text. (Text_TurnStatus)
-            if (Turn.CurrentPlayersTurn == Player)
+            if (TurnController.CurrentPlayer == Player)
             {
-                switch (Turn.TurnPhase)
+                switch (TurnController.CurrentPhase)
                 {
                     case TurnPhase.Hero:
                         if (PlayerFsm.State is PlayerMovement)
@@ -72,14 +72,14 @@ namespace DungeonTiles.Ui
                         SetStatus("Your Exploration Phase");
                         break;
 
-                    case TurnPhase.Monster:
-                        SetStatus("Your Monster Phase");
+                    case TurnPhase.Villian:
+                        SetStatus("Your Villian Phase");
                         break;
                 }
             }
             else
             {
-                TurnStatusText.text = Turn.CurrentPlayersTurn.name + "'s Turn";
+                TurnStatusText.text = TurnController.CurrentPlayer.name + "'s Turn";
             }
         }
 

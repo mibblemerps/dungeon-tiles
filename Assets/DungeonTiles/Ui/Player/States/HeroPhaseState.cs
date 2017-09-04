@@ -2,12 +2,13 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using DungeonTiles.Turns;
 using UnityEngine;
 using UnityEngine.UI;
 
 namespace DungeonTiles.Ui.Player.States
 {
-    public class PickAction : PlayerState
+    public class HeroPhaseState : PlayerState
     {
         protected Canvas BottomCanvas;
 
@@ -16,12 +17,22 @@ namespace DungeonTiles.Ui.Player.States
 
         protected Dictionary<AttackCardBehaviour, Button> AttackButtons = new Dictionary<AttackCardBehaviour, Button>();
 
-        public PickAction(PlayerFsm fsm) : base(fsm)
+        public int Moves;
+        public int Attacks;
+
+        public HeroPhaseState(PlayerFsm fsm) : base(fsm)
         {
         }
 
         public override void Start()
         {
+            if (Moves + Attacks >= 2)
+            {
+                // Finished hero phase
+                Game.TurnController.CurrentPhase = TurnPhase.Exploration;
+                return;
+            }
+
             // Get bottom canvas
             BottomCanvas = GameObject.Find("Bottom Canvas").GetComponent<Canvas>();
             BottomCanvas.enabled = true; // show canvas
@@ -34,7 +45,8 @@ namespace DungeonTiles.Ui.Player.States
             MoveCardBtn.onClick.RemoveAllListeners();
             MoveCardBtn.onClick.AddListener(() =>
             {
-                Fsm.SetState(new PlayerMovement((PlayerFsm) Fsm));
+                Moves++;
+                Fsm.SetState(new PlayerMovement((PlayerFsm) Fsm, this));
             });
 
             UpdateAttackCards();
@@ -55,10 +67,13 @@ namespace DungeonTiles.Ui.Player.States
             foreach (AttackCardBehaviour attackCardBehaviour in GameObject.FindObjectsOfType<AttackCardBehaviour>())
             {
                 Button btn = attackCardBehaviour.gameObject.GetComponent<Button>();
-
+                
                 if (btn != null)
                 {
                     AttackButtons.Add(attackCardBehaviour, btn);
+
+                    // Only allow using attack if an attack hasn't been used yet.
+                    btn.interactable = Attacks <= 0;
                 }
             }
 
@@ -69,7 +84,8 @@ namespace DungeonTiles.Ui.Player.States
                 var card = attackCard; // To fix inconsistent behaviour when accessing 'attackCard' inside a closure
                 attackCard.Value.onClick.AddListener(() =>
                 {
-                    Fsm.SetState(new PlayerAttack((PlayerFsm) Fsm, card.Key.GetAttack()));
+                    Attacks++;
+                    Fsm.SetState(new PlayerAttack((PlayerFsm) Fsm, this, card.Key.GetAttack()));
                 });
             }
         }

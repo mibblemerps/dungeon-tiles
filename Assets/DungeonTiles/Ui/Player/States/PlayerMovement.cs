@@ -11,14 +11,17 @@ namespace DungeonTiles.Ui.Player.States
 {
     public class PlayerMovement : PlayerState
     {
+        protected HeroPhaseState HeroPhaseState;
+
         public int MaxMoves = 8;
 
         public int SquaresMoved;
 
         protected SmoothMovement GridMovement;
 
-        public PlayerMovement(PlayerFsm fsm) : base(fsm)
+        public PlayerMovement(PlayerFsm fsm, HeroPhaseState heroPhaseState) : base(fsm)
         {
+            HeroPhaseState = heroPhaseState;
         }
 
         public override void Start()
@@ -56,7 +59,7 @@ namespace DungeonTiles.Ui.Player.States
             // Max moves
             if (SquaresMoved >= MaxMoves)
             {
-                Fsm.SetState(new PickAction((PlayerFsm) Fsm));
+                Fsm.SetState(HeroPhaseState); // Return to pick action state
             }
         }
     }

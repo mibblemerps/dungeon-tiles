@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using DungeonTiles.Ui.Player.States;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace DungeonTiles.Ui.Player
 {
@@ -21,7 +16,7 @@ namespace DungeonTiles.Ui.Player
 
         public void Start()
         {
-            PlayerFsm.SetState(new PickAction(PlayerFsm));
+            //PlayerFsm.SetState(new HeroPhaseState(PlayerFsm));
         }
 
         public void Update()
