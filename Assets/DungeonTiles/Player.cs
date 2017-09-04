@@ -8,6 +8,12 @@ namespace DungeonTiles
 {
     public class Player : MonoBehaviour
     {
+        /// <summary>
+        /// Is this the local player that this game client is in control of?<br />
+        /// This would be false if it's an AI or remote player.
+        /// </summary>
+        public bool IsLocalPlayer = false;
+
         protected Game Game;
         protected SmoothMovement GridMovement;
 

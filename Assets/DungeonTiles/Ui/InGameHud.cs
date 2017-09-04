@@ -24,7 +24,7 @@ namespace DungeonTiles.Ui
         public void Start()
         {
             Game = Game.Instance;
-            Player = Game.Players.First(); // todo: get player properly
+            Player = Game.LocalPlayer;
             PlayerFsm = Player.GetComponent<PlayerFsmBehaviour>().PlayerFsm;
             
             TurnStatusText = GameObject.Find("Text_TurnStatus").GetComponent<Text>();

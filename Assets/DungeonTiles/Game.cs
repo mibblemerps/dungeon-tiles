@@ -27,6 +27,8 @@ namespace DungeonTiles
 
         public List<Player> Players = new List<Player>();
 
+        public Player LocalPlayer;
+        
         public Game()
         {
             Instance = this;
@@ -60,7 +62,20 @@ namespace DungeonTiles
 
             Player[] players = FindObjectsOfType<Player>();
             foreach (Player player in players)
+            {
                 Players.Add(player);
+
+                if (player.IsLocalPlayer)
+                {
+                    if (LocalPlayer != null && LocalPlayer != player)
+                        Debug.LogWarning("LocalPlayer has changed! Maybe you have multiple players with IsLocalPlayer = true?");
+
+                    LocalPlayer = player;
+                }
+            }
+
+            if (players.Length == 0)
+                Debug.LogError("No player found in the scene!");
         }
     }
 }
