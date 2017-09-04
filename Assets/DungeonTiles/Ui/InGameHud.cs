@@ -35,7 +35,10 @@ namespace DungeonTiles.Ui
         {
             Turn = Game.TurnController.Turn;
 
-            UpdateTopLeftPanel();
+            // todo: Make this update only on an as-needed basis.
+            // Only update top left panel once every 15 frames
+            if (Time.frameCount % 15 == 0)
+                UpdateTopLeftPanel();
         }
 
         protected void UpdateTopLeftPanel()
